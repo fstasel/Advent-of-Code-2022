@@ -93,7 +93,7 @@ for _ in range(10000):
                 else:
                     worry = [(worry[k] * op) % monkeys[k]['rule']
                              for k in range(nmonkey)]
-            if worry[i] % monkeys[i]['rule'] == 0:
+            if worry[i] == 0:
                 monkeys[monkeys[i]['true']]['items'].append(worry)
             else:
                 monkeys[monkeys[i]['false']]['items'].append(worry)
