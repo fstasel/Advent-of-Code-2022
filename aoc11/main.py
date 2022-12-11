@@ -1,6 +1,4 @@
 from enum import Enum
-import math
-
 
 class OpType(Enum):
     VARIABLE = 1
