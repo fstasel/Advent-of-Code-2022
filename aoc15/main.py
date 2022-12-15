@@ -18,8 +18,8 @@ x2 = max([k for _, k in intervals])
 print(x2-x1)
 
 # part 2
-search_range = chain.from_iterable((d, u) for d, u in zip(
-    range(2000000, -1, -1), range(2000001, 4000001)))
+search_range = chain.from_iterable(
+    zip(range(2000000, -1, -1), range(2000001, 4000001)))
 for dest_y in search_range:  # exhaustive search from mid point
     intervals = []           # better algorithm?
     for sx, sy, bx, by in pos:
