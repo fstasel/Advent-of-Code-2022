@@ -42,7 +42,9 @@ for dest_y in search_range:  # exhaustive search from mid point
                 if s2 <= rhi:
                     Rnew.append((s2, rhi))
         R = Rnew
-    if (len(R) > 0):
+        if R == []:
+            break
+    if len(R) > 0:
         print(R)
         print(dest_y)
         print(R[0][0] * 4000000 + dest_y)
