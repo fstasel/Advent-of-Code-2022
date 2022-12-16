@@ -27,6 +27,7 @@ for node in graph:
     move_cost[node] = nodecost
 
 
+# BFS
 def deepen(route=[], tp=0, tf=0, rem=30, g={}):
     global move_cost, maxtp
     cur = route[-1]
