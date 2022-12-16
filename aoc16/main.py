@@ -35,16 +35,15 @@ def deepen(route=[], tp=0, tf=0, rem=30, g={}):
         tf += curflow
         rem -= 1
     for n in g:
-        if n not in route and g[n][0] > 0:
-            if rem >= move_cost[cur][n]:
-                deepen(route + [n], tp + tf * move_cost[cur]
-                       [n], tf, rem - move_cost[cur][n], g)
+        if n not in route and g[n][0] > 0 and rem >= move_cost[cur][n]:
+            deepen(route + [n], tp + tf * move_cost[cur]
+                   [n], tf, rem - move_cost[cur][n], g)
     tp += rem * tf
     if tp > maxtp:
         maxtp = tp
 
 
-# # part 1
+# part 1
 maxtp = 0
 deepen(['AA'], g=graph)
 print(maxtp)
