@@ -5,7 +5,7 @@ import re
 
 lines = open('input.txt', 'r').read().splitlines()
 pat = re.compile(
-    r"Valve (\w+) has flow rate=(\d+); tunnels? leads? to valves? (.+)+")
+    r"Valve (\w+) has flow rate=(\d+); tunnels? leads? to valves? (.+)")
 data = list(map(lambda s: pat.findall(s)[0], lines))
 graph = {n: (int(f), list(e.split(', '))) for n, f, e in data}
 
