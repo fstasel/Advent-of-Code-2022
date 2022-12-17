@@ -32,7 +32,7 @@ while ri < NROCKS:
         cuj = jet[ji % ljet]
         if cuj == '>':
             col = reduce(lambda a, b: a or b, [
-                         c[y - yy][x + xx + 1] for xx, yy in cur])
+                c[y - yy][x + xx + 1] for xx, yy in cur])
             if not col:
                 x += 1
         else:
@@ -63,6 +63,8 @@ while ri < NROCKS:
                 hr -= mch
                 dellist.append((ri+1, mch))
                 if len(dellist) == 2:
+                    # cant wait till the end of universe
+                    # let's warp up
                     delta = dellist[1][0] - dellist[0][0]
                     todel = ((NROCKS - dellist[1][0]) // delta) * dellist[1][1]
                     delh += todel
