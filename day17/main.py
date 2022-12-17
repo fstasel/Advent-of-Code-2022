@@ -3,7 +3,7 @@ from functools import reduce
 # NROCKS = 2022
 NROCKS = 1000000000000
 
-jet = open('input.txt', 'r').read().strip()
+jet = open('test.txt', 'r').read().strip()
 ljet = len(jet)
 r = [[(0, 0), (1, 0), (2, 0), (3, 0)],
      [(1, 0), (0, 1), (1, 1), (2, 1), (1, 2)],
@@ -56,13 +56,19 @@ while ri < NROCKS:
                 #####################
             # clean up mem (part 2)
             mch = min(ch)
-            if mch == max(ch):
+            diff = abs(mch - max(ch))
+            if diff == 0:
+                # "== 0" is enough to solve my input
+                # since we obtain flat ground
+                # "> larger number" may be required
+                # for different input
                 c = c[mch:]
                 ch = [y - mch for y in ch]
                 delh += mch
                 hr -= mch
                 dellist.append((ri+1, mch))
-                if len(dellist) == 2:
+                if len(dellist) == 2:   # 2 works for my input
+                    # actually, we need to see dellist to observe the period
                     # cant wait till the end of the universe
                     # let's warp up
                     delta = dellist[1][0] - dellist[0][0]
