@@ -1,5 +1,18 @@
 from functools import reduce
 
+
+# autocorrelation func. for period detection
+def acorr(x):
+    c = [0] * len(x)
+    xx = x + x
+    for i in range(len(c)):
+        c[i] = sum([xx[j + i] * x[j] for j in range(len(x))])
+    return c
+
+
+NCHECK = 100
+NSAMPLE = 1000
+
 # NROCKS = 2022
 NROCKS = 1000000000000
 
@@ -56,40 +69,37 @@ while ri < NROCKS:
                 #####################
             # clean up mem (part 2)
             mch = min(ch)
-            diff = abs(mch - max(ch))
-            if diff == 0:
-                # "== 0" is enough to solve my input
-                # since we obtain flat ground
-                # "> larger number" may be required
-                # for different input
+            if (ri + 1) % NCHECK == 0:
                 c = c[mch:]
                 ch = [y - mch for y in ch]
                 delh += mch
                 hr -= mch
-                dellist.append((ri+1, mch))
-                if len(dellist) == 2:   # 2 works for my input
-                    # actually, we need to see dellist to observe the period
+                dellist.append(mch)
+                print(len(dellist), '/', NSAMPLE)
+                if len(dellist) == NSAMPLE:
+                    # samples collected
                     # cant wait till the end of the universe
                     # let's warp up
-                    delta = dellist[1][0] - dellist[0][0]
-                    todel = ((NROCKS - dellist[1][0]) // delta) * dellist[1][1]
+                    ac = acorr(dellist)
+                    period = ac.index(max(ac[1:]))
+                    if dellist[-period:] == dellist[-period-period:-period]:
+                        print(period)
+                    else:
+                        print('failed')
+                        exit(1)
+                    todel = ((NROCKS - (ri + 1)) // (period * NCHECK)) \
+                        * sum(dellist[-period:])
                     delh += todel
-                    NROCKS = (NROCKS - dellist[1][0]) % delta + (ri + 1) % 5
+                    NROCKS = (NROCKS - (ri + 1)) % (period *
+                                                    NCHECK) + (ri + 1) % 5
                     ri = (ri + 1) % 5 - 1
             break
     ri += 1
-    # draw chamber
-    # this is just for checking that it's really periodic.
-    # if len(dellist) == 2:
-    #     for i in range(len(c) - 1, -1, -1):
-    #         for j in range(9):
-    #             print('#' if c[i][j] else ' ', end='')
-    #         print()
-    #     print(dellist)
-    #     pass
-    # Oh yeah, it is.
 
-print(dellist)            # num of rocks fallen vs deleted lines
-print('ri = ' + str(ri))  # rock index
-print('hr = ' + str(hr))  # current height
+    # draw chamber for testing purposes
+    # for i in range(len(c) - 1, -1, -1):
+    #     for j in range(9):
+    #         print('#' if c[i][j] else ' ', end='')
+    #     print()
+
 print(hr + delh)          # total height
