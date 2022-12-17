@@ -63,7 +63,7 @@ while ri < NROCKS:
                 hr -= mch
                 dellist.append((ri+1, mch))
                 if len(dellist) == 2:
-                    # cant wait till the end of universe
+                    # cant wait till the end of the universe
                     # let's warp up
                     delta = dellist[1][0] - dellist[0][0]
                     todel = ((NROCKS - dellist[1][0]) // delta) * dellist[1][1]
