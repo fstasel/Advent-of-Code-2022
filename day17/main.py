@@ -3,7 +3,7 @@ from functools import reduce
 # NROCKS = 2022
 NROCKS = 1000000000000
 
-jet = open('test.txt', 'r').read().strip()
+jet = open('input.txt', 'r').read().strip()
 ljet = len(jet)
 r = [[(0, 0), (1, 0), (2, 0), (3, 0)],
      [(1, 0), (0, 1), (1, 1), (2, 1), (1, 2)],
