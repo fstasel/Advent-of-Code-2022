@@ -2,10 +2,10 @@ lines = open('input.txt').read().splitlines()
 cubes = set([[(int(x), int(y), int(z)) for x, y, z in [c.split(',')]][0]
              for c in lines])
 
-surf = 6 * len(cubes) - sum([sum(map(lambda v: 1 if v in cubes else 0,
-                                 [(x+1, y, z), (x-1, y, z), (x, y+1, z),
-                                  (x, y-1, z), (x, y, z+1), (x, y, z-1)]))
-                             for x, y, z in cubes])
+surf = sum([sum(map(lambda v: 1 if v not in cubes else 0,
+                    [(x+1, y, z), (x-1, y, z), (x, y+1, z),
+                     (x, y-1, z), (x, y, z+1), (x, y, z-1)]))
+            for x, y, z in cubes])
 print(surf)
 
 # part 2
