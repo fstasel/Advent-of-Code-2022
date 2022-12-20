@@ -66,15 +66,15 @@ def deepen(r, inv, rem=24):
 
 
 # part 1
-# res = 0
-# for b in range(len(lines)):
-#     visit = set()
-#     iter = 0
-#     best = (0, 0, [], [], 0)
-#     g = deepen(initr, initinv)
-#     print(b, g, best)
-#     res += g * (b+1)
-# print(res)
+res = 0
+for b in range(len(lines)):
+    visit = set()
+    iter = 0
+    best = (0, 0, [], [], 0)
+    g = deepen(initr, initinv)
+    print(b, g, best)
+    res += g * (b+1)
+print(res)
 
 
 # part 2
