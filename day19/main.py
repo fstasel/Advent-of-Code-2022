@@ -20,6 +20,14 @@ def able(inv, req):
     return True
 
 
+# pack values in 4-bits wide so that large values produce collision
+# resulting in reduction of search space
+def pack(r, inv, rem):
+    return r[0] | r[1] << 4 | r[2] << 8 | r[3] << 12 | \
+        inv[0] << 16 | inv[1] << 20 | inv[2] << 24 | inv[3] << 28 | \
+        rem << 32
+
+
 def deepen(r, inv, rem=24):
     global costs, b, iter, best, visit
     g = inv[3]
@@ -30,9 +38,9 @@ def deepen(r, inv, rem=24):
             print('>', iter, best)
         iter += 1
         return g
-    if (tuple(r), tuple(inv), rem) in visit:
+    if pack(r, inv, rem) in visit:
         return g
-    visit.add((tuple(r), tuple(inv), rem))
+    visit.add(pack(r, inv, rem))
     suf = [able(inv, costs[b][k]) for k in range(4)]
     if rem == 1:
         trials = [-1]
@@ -54,19 +62,19 @@ def deepen(r, inv, rem=24):
         elif suf[k]:
             g = max(g, deepen([r[i] + (1 if i == k else 0) for i in range(4)],
                     [a+b-c for a, b, c in zip(r, inv, costs[b][k])], rem-1))
-
     return g
 
+
 # part 1
-res = 0
-for b in range(len(lines)):
-    visit = set()
-    iter = 0
-    best = (0, 0, [], [], 0)
-    g = deepen(initr, initinv)
-    print(b, g, best)
-    res += g * (b+1)
-print(res)
+# res = 0
+# for b in range(len(lines)):
+#     visit = set()
+#     iter = 0
+#     best = (0, 0, [], [], 0)
+#     g = deepen(initr, initinv)
+#     print(b, g, best)
+#     res += g * (b+1)
+# print(res)
 
 
 # part 2
